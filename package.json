@@ -4,5 +4,12 @@
   "main": "index.js",
   "repository": "git@own.github.com:baldore/rx-practical-examples.git",
   "author": "baldore <acornssn@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "1.6.2",
+    "typescript": "2.7.2"
+  },
+  "scripts": {
+    "start": "parcel index.html"
+  }
 }
