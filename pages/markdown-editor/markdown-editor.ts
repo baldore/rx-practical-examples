@@ -28,6 +28,10 @@ const dom = {
 const editorChange$ = Observable.fromEvent(dom.editor, 'input').map(
   (e: any) => e.target.value,
 )
-const markdown$ = editorChange$.map(markdownText => marked(markdownText))
 
-markdown$.subscribe(value => (dom.result.innerHTML = value))
+const efficientMarkdown$ = Observable.merge(
+  editorChange$.throttleTime(400),
+  editorChange$.debounceTime(400),
+).map(markdownText => marked(markdownText) as string)
+
+efficientMarkdown$.subscribe(value => (dom.result.innerHTML = value))

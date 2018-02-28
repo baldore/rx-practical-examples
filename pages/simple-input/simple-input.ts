@@ -16,12 +16,12 @@ const dom = {
   content: document.querySelector(selectors.content) as HTMLElement,
 }
 
-const input$: Observable<Event> = Observable.create(observer => {
-  dom.input.addEventListener('input', e => observer.next(e))
-})
+// const input$: Observable<Event> = Observable.create(observer => {
+//   dom.input.addEventListener('input', e => observer.next(e))
+// })
 
 // Simpler!
-// const input$ = Observable.fromEvent(dom.input, 'input')
+const input$ = Observable.fromEvent(dom.input, 'input')
 
 input$.subscribe(e => {
   dom.content.innerText = dom.input.value
