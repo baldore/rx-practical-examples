@@ -1,0 +1,3 @@
+module.exports = {
+  layouts: 'layouts',
+}
