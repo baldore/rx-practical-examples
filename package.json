@@ -1,0 +1,8 @@
+{
+  "name": "rx-practical-examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@own.github.com:baldore/rx-practical-examples.git",
+  "author": "baldore <acornssn@gmail.com>",
+  "license": "MIT"
+}
