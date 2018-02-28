@@ -1,0 +1,22 @@
+.Markdown-container {
+  display: flex;
+  min-height: 600px;
+  background-color: #ededed;
+  padding: 10px 5px;
+}
+
+.Markdown-column {
+  flex: 1;
+  display: flex;
+  padding: 0 5px;
+}
+
+.Markdown-editor {
+  border: 1px solid #949494;
+  width: 100%;
+}
+
+.Markdown-result {
+  border: 1px solid #949494;
+  width: 100%;
+}
