@@ -7,6 +7,10 @@ if (module.hot) {
   })
 }
 
+interface EmptyRequest {
+  state: 'empty'
+}
+
 interface BookFound {
   state: 'found'
   data: any
@@ -20,7 +24,7 @@ interface BookLoading {
   state: 'loading'
 }
 
-type BookResponse = BookNotFound | BookFound | BookLoading
+type BookResponse = BookNotFound | BookFound | BookLoading | EmptyRequest
 
 const restfulUrls = {
   search: title => `http://openlibrary.org/search.json?q=${title}`,
@@ -47,22 +51,25 @@ const betterInput$ = Observable.merge(
   input$.debounceTime(300),
 )
 
-const bookRequest$ = betterInput$.switchMap(value =>
-  Observable.ajax({ url: restfulUrls.search(value), crossDomain: true })
-    .map(({ response }) => response)
-    .map<any, BookResponse>(response => {
-      if (response.numFound === 0) {
-        return {
-          state: 'not-found',
-        }
-      }
+const bookRequest$ = betterInput$.switchMap(
+  value =>
+    value === ''
+      ? Observable.of<BookResponse>({ state: 'empty' })
+      : Observable.ajax({ url: restfulUrls.search(value), crossDomain: true })
+          .map(({ response }) => response)
+          .map<any, BookResponse>(response => {
+            if (response.numFound === 0) {
+              return {
+                state: 'not-found',
+              }
+            }
 
-      return {
-        state: 'found',
-        data: response,
-      }
-    })
-    .startWith<BookResponse>({ state: 'loading' }),
+            return {
+              state: 'found',
+              data: response,
+            }
+          })
+          .startWith<BookResponse>({ state: 'loading' }),
 )
 
 bookRequest$.subscribe(response => {
@@ -78,6 +85,10 @@ bookRequest$.subscribe(response => {
 
     case 'not-found':
       dom.result.innerText = 'No results found'
+      break
+
+    case 'empty':
+      dom.result.innerText = ''
       break
   }
 })
